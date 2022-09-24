@@ -1,0 +1,16 @@
+---
+
+# Wordpress configuration location
+wordpress_conf_dir: /var/www/wordpress
+
+# Wordpress code location
+wordpress_path: /var/www/wordpress
+
+# Wordpress database name
+wordpress_db_name: wordpress
+
+# Wordpress database user
+wordpress_db_user: wordpress
+
+# Wordpress database password
+wordpress_db_pwd: wordpress

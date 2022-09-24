@@ -1,0 +1,44 @@
+---
+
+- name: Download the latest code
+  get_url:
+    url: https://wordpress.org/latest.tar.gz
+    dest: /tmp/latest.tar.gz
+
+- name: Extract code to /tmp
+  unarchive:
+    src: /tmp/latest.tar.gz
+    dest: /tmp
+    remote_src: yes
+
+- name: Copy code  # noqa risky-file-permissions
+  copy:
+    src: /tmp/wordpress/
+    dest: "{{ wordpress_path }}"
+    remote_src: yes
+    owner: apache
+    group: apache
+  notify: Restarting web service
+
+- name: Setup access using htaccess
+  copy:
+    src: files/htaccess
+    dest:  "{{ wordpress_path }}/.htaccess"
+    owner: apache
+    group: apache
+    mode: "0644"
+  notify: Restarting web service
+
+- name: Change SELinux context
+  sefcontext:
+    target: "{{ wordpress_path }}"
+    setype: httpd_sys_rw_content_t
+    state: present
+  notify: Restarting web service
+  when:
+    - ansible_selinux is defined
+    - ansible_selinux['status'] == 'enabled'
+
+- name: Reset configuration path
+  set_fact:
+    wordpress_conf_dir: "{{ wordpress_path }}"

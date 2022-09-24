@@ -1,0 +1,47 @@
+---
+
+roles:
+  - name: epel
+    src: https://github.com/de-it-krachten/ansible-role-epel.git
+    version: main
+    scm: git
+  - name: firewall
+    src: https://github.com/de-it-krachten/ansible-role-firewall.git
+    version: main
+    scm: git
+  - name: firewalld
+    src: https://github.com/de-it-krachten/ansible-role-firewalld.git
+    version: main
+    scm: git
+  - name: iptables
+    src: https://github.com/de-it-krachten/ansible-role-iptables.git
+    version: main
+    scm: git
+  - name: reboot
+    src: https://github.com/de-it-krachten/ansible-role-reboot.git
+    version: main
+    scm: git
+  - name: ufw
+    src: https://github.com/de-it-krachten/ansible-role-ufw.git
+    version: main
+    scm: git
+  - name: unbound
+    src: https://github.com/de-it-krachten/ansible-role-unbound.git
+    version: main
+    scm: git
+  - name: openssl
+    src: https://github.com/de-it-krachten/ansible-role-openssl.git
+    version: main
+    scm: git
+  - name: apache
+    src: https://github.com/de-it-krachten/ansible-role-apache.git
+    version: dev
+    scm: git
+  - name: php
+    src: https://github.com/de-it-krachten/ansible-role-php.git
+    version: dev
+    scm: git
+  - name: mariadb
+    src: https://github.com/de-it-krachten/ansible-role-mariadb.git
+    version: dev
+    scm: git

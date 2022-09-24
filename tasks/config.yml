@@ -1,0 +1,27 @@
+---
+
+- name: Copy config file
+  copy:
+    src: "{{ wordpress_conf_dir }}/wp-config-sample.php"
+    dest: "{{ wordpress_conf_dir }}/wp-config.php"
+    owner: apache
+    group: apache
+    mode: "0644"
+    remote_src: true
+    force: false
+
+- name: Edit config with DB settings
+  lineinfile:
+    path: "{{ wordpress_conf_dir }}/wp-config.php"
+    line: "define('{{ item.key }}', '{{ item.value }}');"
+    regexp: "define.*'{{ item.key }}',.*"
+    state: present
+  loop:
+    - key: 'DB_HOST'
+      value: '{{ wordpress_db_host }}'
+    - key: 'DB_NAME'
+      value: '{{ wordpress_db_name }}'
+    - key: 'DB_USER'
+      value: '{{ wordpress_db_user }}'
+    - key: 'DB_PASSWORD'
+      value: '{{ wordpress_db_pwd }}'
