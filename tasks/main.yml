@@ -1,20 +1,10 @@
 ---
 
 - name: Load variables based on OS type
-  include_vars: "{{ lookup('first_found', params) }}"
-  vars:
-    params:
-      files:
-        - "{{ ansible_distribution }}-{{ ansible_distribution_major_version }}.yml"
-        - "{{ ansible_distribution }}.yml"
-        - "family-{{ ansible_os_family }}-{{ ansible_distribution_major_version }}.yml"
-        - "family-{{ ansible_os_family }}.yml"
-        - default.yml
-      paths:
-        - 'vars'
+  ansible.builtin.include_tasks: vars.yml
 
 - name: Perform wordpress installation
-  include_tasks: install.yml
+  ansible.builtin.include_tasks: install.yml
 
-- name: Perform wordpress configuration
-  include_tasks: config.yml
+# - name: Perform wordpress configuration
+#   include_tasks: config.yml

@@ -35,13 +35,13 @@ roles:
     scm: git
   - name: apache
     src: https://github.com/de-it-krachten/ansible-role-apache.git
-    version: dev
+    version: main
     scm: git
   - name: php
     src: https://github.com/de-it-krachten/ansible-role-php.git
-    version: dev
+    version: main
     scm: git
   - name: mariadb
     src: https://github.com/de-it-krachten/ansible-role-mariadb.git
-    version: dev
+    version: main
     scm: git

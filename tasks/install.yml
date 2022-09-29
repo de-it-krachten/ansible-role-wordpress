@@ -1,36 +1,65 @@
 ---
 
 - name: Download the latest code
-  get_url:
+  ansible.builtin.get_url:
     url: https://wordpress.org/latest.tar.gz
     dest: /tmp/latest.tar.gz
+    mode: "0644"
 
 - name: Extract code to /tmp
-  unarchive:
+  ansible.builtin.unarchive:
     src: /tmp/latest.tar.gz
-    dest: /tmp
+    dest: "{{ wordpress_tmp_path | dirname }}"
     remote_src: yes
+    owner: "{{ webserver_user }}"
+    group: "{{ webserver_group }}"
 
-- name: Copy code  # noqa risky-file-permissions
-  copy:
-    src: /tmp/wordpress/
-    dest: "{{ wordpress_path }}"
-    remote_src: yes
-    owner: apache
-    group: apache
-  notify: Restarting web service
+- name: Copy config file from template
+  ansible.builtin.copy:
+    src: "{{ wordpress_tmp_path }}/wp-config-sample.php"
+    dest: "{{ wordpress_tmp_path }}/wp-config.php"
+    owner: "{{ webserver_user }}"
+    group: "{{ webserver_group }}"
+    mode: "0644"
+    remote_src: true
+    force: false
+
+- name: Edit config with DB settings
+  ansible.builtin.lineinfile:
+    path: "{{ wordpress_tmp_path }}/wp-config.php"
+    line: "define('{{ item.key }}', '{{ item.value }}');"
+    regexp: "define.*'{{ item.key }}',.*"
+    state: present
+  loop:
+    - key: 'DB_HOST'
+      value: '{{ wordpress_db_host }}'
+    - key: 'DB_NAME'
+      value: '{{ wordpress_db_name }}'
+    - key: 'DB_USER'
+      value: '{{ wordpress_db_user }}'
+    - key: 'DB_PASSWORD'
+      value: '{{ wordpress_db_pwd }}'
 
 - name: Setup access using htaccess
-  copy:
+  ansible.builtin.copy:
     src: files/htaccess
-    dest:  "{{ wordpress_path }}/.htaccess"
-    owner: apache
-    group: apache
+    dest: "{{ wordpress_tmp_path }}/.htaccess"
+    owner: "{{ webserver_user }}"
+    group: "{{ webserver_group }}"
     mode: "0644"
+
+- name: Rsync data
+  ansible.posix.synchronize:
+    src: "{{ wordpress_tmp_path }}/"
+    dest: "{{ wordpress_path }}"
+    rsync_opts:
+      - "--omit-dir-times"
+  delegate_to: "{{ inventory_hostname }}"
   notify: Restarting web service
+  # tags: molecule-idempotence-notest
 
 - name: Change SELinux context
-  sefcontext:
+  community.general.sefcontext:
     target: "{{ wordpress_path }}"
     setype: httpd_sys_rw_content_t
     state: present
@@ -40,5 +69,5 @@
     - ansible_selinux['status'] == 'enabled'
 
 - name: Reset configuration path
-  set_fact:
+  ansible.builtin.set_fact:
     wordpress_conf_dir: "{{ wordpress_path }}"
