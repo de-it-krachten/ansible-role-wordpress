@@ -69,6 +69,10 @@
           update_all: "{{ update_all | default(False) }}"
 
     - name: Enable root access
+      when:
+        - molecule_driver is search('^(hetznercloud|vagrant)$')
+        - enable_root_access is defined and enable_root_access|bool
+        - root_pubkey is defined and root_pubkey|length > 0
       block:
 
         - name: Create /root/.ssh
@@ -85,15 +89,11 @@
             state: present
             key: "{{ root_pubkey }}"
 
-      when:
-        - molecule_driver is search('^(hetznercloud|vagrant)$')
-        - enable_root_access is defined and enable_root_access|bool
-        - root_pubkey is defined and root_pubkey|length > 0
-
-    - name: family Debian
+    - name: Family Debian
+      when: ansible_os_family == 'Debian'
       block:
 
-        - name: Configure APT to use proxy
+        - name: Configure APT to use proxy  # noqa template-instead-of-copy
           copy:
             content: |
               Acquire::http::proxy "{{ http_proxy }}/";
@@ -125,9 +125,9 @@
               - ssh
             state: present
 
-      when: ansible_os_family == 'Debian'
 
-    - name: family RedHat < 8
+    - name: Family RedHat < 8
+      when: ansible_os_family == 'RedHat' and (ansible_distribution_major_version|int) < 8
       block:
 
         - name: Configure YUM to use proxy
@@ -163,9 +163,9 @@
             name: epel
           when: activate_epel is defined and activate_epel|bool
 
-      when: ansible_os_family == 'RedHat' and (ansible_distribution_major_version|int) < 8
 
-    - name: family RedHat 8+
+    - name: Family RedHat 8+
+      when: ansible_os_family == 'RedHat' and (ansible_distribution_major_version|int) >= 8
       block:
 
         # Switch to CentOS 8 vault mirrors
@@ -227,10 +227,11 @@
             name: epel
           when: activate_epel is defined and activate_epel|bool and ansible_distribution != 'Fedora'
 
-      when: ansible_os_family == 'RedHat' and (ansible_distribution_major_version|int) >= 8
-
 
     - name: Firewall
+      when:
+        - prepare_firewall is defined and prepare_firewall|bool
+        - inventory_hostname is not search('-dns$')
       block:
 
         - name: Install iptables
@@ -248,19 +249,17 @@
             name: firewalld
           when: molecule_distro in firewalld_distros
 
-      when:
-        - prepare_firewall is defined and prepare_firewall|bool
-        - inventory_hostname is not search('-dns$')
 
     - name: Reboot the server
       include_role:
         name: reboot
       when: molecule_driver is search('^(vagrant|hetznercloud)$')
 
-    - name: re-run setup
+    - name: Re-run setup
       setup:
 
-    - name: localhosts
+    - name: Localhosts
+      when: register_hosts is defined and register_hosts|bool
       block:
 
         - name: Register all nodes in /etc/hosts
@@ -268,6 +267,4 @@
             name: hosts
           vars:
             hosts_mode: hosts
-
-      when: register_hosts is defined and register_hosts|bool
 

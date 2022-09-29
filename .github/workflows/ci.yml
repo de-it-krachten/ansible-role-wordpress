@@ -82,15 +82,7 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - distro: centos7
-            playbook: converge.yml
-            # continue_on_error: false
-            # failfast: true
           - distro: rockylinux8
-            playbook: converge.yml
-            # continue_on_error: false
-            # failfast: true
-          - distro: rockylinux9
             playbook: converge.yml
             # continue_on_error: false
             # failfast: true
@@ -102,35 +94,11 @@ jobs:
             playbook: converge.yml
             # continue_on_error: false
             # failfast: true
-          - distro: almalinux9
-            playbook: converge.yml
-            # continue_on_error: false
-            # failfast: true
-          - distro: debian10
-            playbook: converge.yml
-            # continue_on_error: false
-            # failfast: true
           - distro: debian11
             playbook: converge.yml
             # continue_on_error: false
             # failfast: true
-          - distro: ubuntu1804
-            playbook: converge.yml
-            # continue_on_error: false
-            # failfast: true
           - distro: ubuntu2004
-            playbook: converge.yml
-            # continue_on_error: false
-            # failfast: true
-          - distro: ubuntu2204
-            playbook: converge.yml
-            # continue_on_error: false
-            # failfast: true
-          - distro: fedora35
-            playbook: converge.yml
-            # continue_on_error: false
-            # failfast: true
-          - distro: fedora36
             playbook: converge.yml
             # continue_on_error: false
             # failfast: true
@@ -170,11 +138,14 @@ jobs:
           sudo apt install curl
           sudo curl -s -o /usr/local/bin/ansible-galaxy.sh \
             https://raw.githubusercontent.com/de-it-krachten/ansible-role-molecule/dev/files/ansible-galaxy.sh
+          sudo curl -s -o /usr/local/bin/ansible-lint.sh \
+            https://raw.githubusercontent.com/de-it-krachten/ansible-role-molecule/dev/files/ansible-lint.sh
           sudo curl -s -o /usr/local/bin/ansible-requirements-clean.sh \
             https://raw.githubusercontent.com/de-it-krachten/ansible-role-molecule/dev/files/ansible-requirements-clean.sh
           sudo curl -s -o /usr/local/bin/molecule-test.sh \
             https://raw.githubusercontent.com/de-it-krachten/ansible-role-molecule/dev/files/molecule-test.sh
           sudo chmod 755 /usr/local/bin/ansible-galaxy.sh
+          sudo chmod 755 /usr/local/bin/ansible-lint.sh
           sudo chmod 755 /usr/local/bin/ansible-requirements-clean.sh
           sudo chmod 755 /usr/local/bin/molecule-test.sh
 

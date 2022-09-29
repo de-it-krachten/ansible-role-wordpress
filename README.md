@@ -10,22 +10,12 @@
 
 Supported platforms
 
-- Red Hat Enterprise Linux 7<sup>1</sup>
 - Red Hat Enterprise Linux 8<sup>1</sup>
-- Red Hat Enterprise Linux 9<sup>1</sup>
-- CentOS 7
 - RockyLinux 8
-- RockyLinux 9
 - OracleLinux 8
 - AlmaLinux 8
-- AlmaLinux 9
-- Debian 10 (Buster)
 - Debian 11 (Bullseye)
-- Ubuntu 18.04 LTS
 - Ubuntu 20.04 LTS
-- Ubuntu 22.04 LTS
-- Fedora 35
-- Fedora 36
 
 Note:
 <sup>1</sup> : no automated testing is performed on these platforms
@@ -39,6 +29,15 @@ wordpress_conf_dir: /var/www/wordpress
 # Wordpress code location
 wordpress_path: /var/www/wordpress
 
+# Wordpress tmp path
+wordpress_tmp_path: /tmp/wordpress
+
+# Wordpress owner
+wordpress_user: "{{ webserver_user | default('wordpress') }}"
+
+# Wordpress group
+wordpress_group: "{{ webserver_group | default('wordpress') }}"
+
 # Wordpress database name
 wordpress_db_name: wordpress
 
@@ -49,7 +48,18 @@ wordpress_db_user: wordpress
 wordpress_db_pwd: wordpress
 </pre></code>
 
+
+### vars/family-RedHat.yml
+<pre><code>
+
+</pre></code>
+
 ### vars/default.yml
+<pre><code>
+
+</pre></code>
+
+### vars/family-Debian.yml
 <pre><code>
 
 </pre></code>
@@ -63,13 +73,25 @@ wordpress_db_pwd: wordpress
   hosts: all
   become: "{{ molecule['converge']['become'] | default('yes') }}"
   vars:
+    openssl_fqdn: www.example.com
+    apache_fqdn: server.example.com
+    apache_ssl_key: "{{ openssl_server_key }}"
+    apache_ssl_crt: "{{ openssl_server_crt }}"
+    apache_ssl_chain: "{{ openssl_server_crt }}"
+    apache_vhosts: "[{'vhost': 'www.example.com', 'template': 'vhost.conf.j2', 'listen': '*', 'port': '443', 'ssl': True, 'ssl_key': '{{ openssl_server_key }}', 'ssl_crt': '{{ openssl_server_crt }}', 'ssl_chain': '{{ openssl_server_crt }}', 'owner': '{{ apache_user }}', 'group': '{{ apache_group }}'}]"
+    mariadb_user: root
+    mariadb_pwd: root
+    mariadb_db_host: localhost
     mariadb_db_name: wordpress
     mariadb_db_user: wordpress
     mariadb_db_pwd: wordpress
+    mariadb_socket_authentication: False
+    wordpress_path: /var/www/www.example.com/public_html
+    wordpress_conf_dir: /var/www/www.example.com/public_html
+    wordpress_db_host: localhost
     wordpress_db_name: wordpress
     wordpress_db_user: wordpress
     wordpress_db_pwd: wordpress
-    php_packages: ['php-curl', 'php-gd', 'php-mbstring', 'php-intl', 'php-soap', 'php-xml', 'php-xmlrpc', 'php-zip']
   pre_tasks:
     - name: Create 'remote_tmp'
       file:
@@ -77,6 +99,7 @@ wordpress_db_pwd: wordpress
         state: directory
         mode: "0700"
   roles:
+    - openssl
     - apache
     - php
     - mariadb

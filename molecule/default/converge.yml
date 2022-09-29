@@ -9,7 +9,7 @@
     apache_ssl_key: "{{ openssl_server_key }}"
     apache_ssl_crt: "{{ openssl_server_crt }}"
     apache_ssl_chain: "{{ openssl_server_crt }}"
-    apache_vhosts: "[{'vhost': 'www.example.com', 'template': 'vhost.conf.j2', 'listen': '*', 'port': '443', 'ssl': True, 'ssl_key': '{{ openssl_server_key }}', 'ssl_crt': '{{ openssl_server_crt }}', 'ssl_chain': '{{ openssl_server_crt }}'}]"
+    apache_vhosts: "[{'vhost': 'www.example.com', 'template': 'vhost.conf.j2', 'listen': '*', 'port': '443', 'ssl': True, 'ssl_key': '{{ openssl_server_key }}', 'ssl_crt': '{{ openssl_server_crt }}', 'ssl_chain': '{{ openssl_server_crt }}', 'owner': '{{ apache_user }}', 'group': '{{ apache_group }}'}]"
     mariadb_user: root
     mariadb_pwd: root
     mariadb_db_host: localhost

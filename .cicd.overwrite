@@ -7,17 +7,71 @@ generic:
   role_description: |
     <basic role description>
 
+# Supported platforms
+platforms:
+  rhel7:
+    ci: false
+    supported: false
+  rhel8:
+    ci: false
+    supported: true
+  rhel9:
+    ci: false
+    supported: false
+  centos7:
+    ci: false
+    supported: false
+  centos8:
+    name: CentOS 8
+    ci: false
+  rockylinux8:
+    ci: true
+    supported: true
+  rockylinux9:
+    ci: false
+    supported: false
+  oraclelinux8:
+    ci: true
+    supported: true
+  almalinux8:
+    ci: true
+    supported: true
+  almalinux9:
+    ci: false
+    supported: false
+  debian10:
+    ci: false
+    supported: false
+  debian11:
+    ci: true
+    supported: true
+  ubuntu1804:
+    ci: false
+    supported: false
+  ubuntu2004:
+    ci: true
+    supported: true
+  ubuntu2204:
+    ci: false
+    supported: false
+  fedora35:
+    ci: false
+    supported: false
+  fedora36:
+    ci: false
+    supported: false
+  alpine3:
+    ci: false
+    supported: false
+
 molecule:
   driver: docker
   requirements:
     roles_extra:
       - openssl
-      - name: apache
-        version: dev
-      - name: php
-        version: dev
-      - name: mariadb
-        version: dev
+      - apache
+      - php
+      - mariadb
   converge:
     roles:
       - openssl
@@ -40,6 +94,8 @@ molecule:
           ssl_key: "{{ openssl_server_key }}"
           ssl_crt: "{{ openssl_server_crt }}"
           ssl_chain: "{{ openssl_server_crt }}"
+          owner: "{{ apache_user }}"
+          group: "{{ apache_group }}"
       mariadb_user: root
       mariadb_pwd: root
       mariadb_db_host: localhost

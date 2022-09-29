@@ -6,6 +6,15 @@ wordpress_conf_dir: /var/www/wordpress
 # Wordpress code location
 wordpress_path: /var/www/wordpress
 
+# Wordpress tmp path
+wordpress_tmp_path: /tmp/wordpress
+
+# Wordpress owner
+wordpress_user: "{{ webserver_user | default('wordpress') }}"
+
+# Wordpress group
+wordpress_group: "{{ webserver_group | default('wordpress') }}"
+
 # Wordpress database name
 wordpress_db_name: wordpress
 

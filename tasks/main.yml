@@ -16,5 +16,5 @@
 - name: Perform wordpress installation
   include_tasks: install.yml
 
-- name: Perform wordpress configuration
-  include_tasks: config.yml
+# - name: Perform wordpress configuration
+#   include_tasks: config.yml
