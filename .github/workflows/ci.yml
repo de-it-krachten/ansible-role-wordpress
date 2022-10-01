@@ -71,7 +71,7 @@ jobs:
         run: |
           set -e
           yamllint .
-          ansible-lint --exclude molecule/
+          ansible-lint.sh
 
   molecule:
     name: Molecule
