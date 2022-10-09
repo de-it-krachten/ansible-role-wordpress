@@ -13,7 +13,9 @@
 None
 
 #### Collections
-- collections
+- community.general
+- ansible.posix
+- community.general
 
 ## Platforms
 
