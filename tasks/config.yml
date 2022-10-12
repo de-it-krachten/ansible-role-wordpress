@@ -1,17 +1,17 @@
 ---
 
 - name: Copy config file
-  copy:
+  ansible.builtin.copy:
     src: "{{ wordpress_conf_dir }}/wp-config-sample.php"
     dest: "{{ wordpress_conf_dir }}/wp-config.php"
-    owner: apache
-    group: apache
+    owner: "{{ webserver_user }}"
+    group: "{{ webserver_group }}"
     mode: "0644"
     remote_src: true
     force: false
 
 - name: Edit config with DB settings
-  lineinfile:
+  ansible.builtin.lineinfile:
     path: "{{ wordpress_conf_dir }}/wp-config.php"
     line: "define('{{ item.key }}', '{{ item.value }}');"
     regexp: "define.*'{{ item.key }}',.*"
