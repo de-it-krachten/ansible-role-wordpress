@@ -15,7 +15,6 @@ None
 #### Collections
 - community.general
 - ansible.posix
-- community.general
 
 ## Platforms
 
@@ -26,6 +25,7 @@ Supported platforms
 - RockyLinux 8
 - RockyLinux 9
 - OracleLinux 8
+- OracleLinux 9
 - AlmaLinux 8
 - AlmaLinux 9
 - Debian 10 (Buster)
@@ -72,7 +72,7 @@ wordpress_db_pwd: wordpress
 <pre><code>
 - name: sample playbook for role 'wordpress'
   hosts: all
-  become: "{{ molecule['converge']['become'] | default('yes') }}"
+  become: "yes"
   vars:
     openssl_fqdn: www.example.com
     apache_fqdn: server.example.com
@@ -93,12 +93,6 @@ wordpress_db_pwd: wordpress
     wordpress_db_name: wordpress
     wordpress_db_user: wordpress
     wordpress_db_pwd: wordpress
-  pre_tasks:
-    - name: Create 'remote_tmp'
-      ansible.builtin.file:
-        path: /root/.ansible/tmp
-        state: directory
-        mode: "0700"
   roles:
     - openssl
     - apache

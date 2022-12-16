@@ -5,6 +5,10 @@ roles:
     src: https://github.com/de-it-krachten/ansible-role-epel.git
     version: main
     scm: git
+  - name: facts
+    src: https://github.com/de-it-krachten/ansible-role-facts.git
+    version: main
+    scm: git
   - name: firewall
     src: https://github.com/de-it-krachten/ansible-role-firewall.git
     version: main
@@ -19,6 +23,10 @@ roles:
     scm: git
   - name: reboot
     src: https://github.com/de-it-krachten/ansible-role-reboot.git
+    version: main
+    scm: git
+  - name: showinfo
+    src: https://github.com/de-it-krachten/ansible-role-showinfo.git
     version: main
     scm: git
   - name: ufw
