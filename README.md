@@ -15,6 +15,7 @@ None
 #### Collections
 - community.general
 - ansible.posix
+- community.crypto
 
 ## Platforms
 
