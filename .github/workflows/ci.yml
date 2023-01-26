@@ -130,12 +130,14 @@ jobs:
             playbook: converge.yml
             ansible: "ansible==2.9.27"
             ansible_lint: "ansible-lint==5.4.0"
+            hetznercloud: True
           - name: rockylinux8_2.13
             runs_on: ubuntu-latest
             distro: rockylinux8
             playbook: converge.yml
             ansible: "ansible-core>2.13,<2.14"
             ansible_lint: "ansible-lint>6,<7"
+            hetznercloud: True
 
           - name: rockylinux9_2.9
             runs_on: ubuntu-latest
@@ -143,12 +145,14 @@ jobs:
             playbook: converge.yml
             ansible: "ansible==2.9.27"
             ansible_lint: "ansible-lint==5.4.0"
+            hetznercloud: True
           - name: rockylinux9_2.13
             runs_on: ubuntu-latest
             distro: rockylinux9
             playbook: converge.yml
             ansible: "ansible-core>2.13,<2.14"
             ansible_lint: "ansible-lint>6,<7"
+            hetznercloud: True
 
           - name: oraclelinux8_2.9
             runs_on: ubuntu-latest
@@ -156,12 +160,14 @@ jobs:
             playbook: converge.yml
             ansible: "ansible==2.9.27"
             ansible_lint: "ansible-lint==5.4.0"
+            hetznercloud: False
           - name: oraclelinux8_2.13
             runs_on: ubuntu-latest
             distro: oraclelinux8
             playbook: converge.yml
             ansible: "ansible-core>2.13,<2.14"
             ansible_lint: "ansible-lint>6,<7"
+            hetznercloud: False
 
           - name: oraclelinux9_2.9
             runs_on: ubuntu-latest
@@ -169,12 +175,14 @@ jobs:
             playbook: converge.yml
             ansible: "ansible==2.9.27"
             ansible_lint: "ansible-lint==5.4.0"
+            hetznercloud: False
           - name: oraclelinux9_2.13
             runs_on: ubuntu-latest
             distro: oraclelinux9
             playbook: converge.yml
             ansible: "ansible-core>2.13,<2.14"
             ansible_lint: "ansible-lint>6,<7"
+            hetznercloud: False
 
           - name: almalinux8_2.9
             runs_on: ubuntu-latest
@@ -182,12 +190,14 @@ jobs:
             playbook: converge.yml
             ansible: "ansible==2.9.27"
             ansible_lint: "ansible-lint==5.4.0"
+            hetznercloud: False
           - name: almalinux8_2.13
             runs_on: ubuntu-latest
             distro: almalinux8
             playbook: converge.yml
             ansible: "ansible-core>2.13,<2.14"
             ansible_lint: "ansible-lint>6,<7"
+            hetznercloud: False
 
           - name: almalinux9_2.9
             runs_on: ubuntu-latest
@@ -195,12 +205,14 @@ jobs:
             playbook: converge.yml
             ansible: "ansible==2.9.27"
             ansible_lint: "ansible-lint==5.4.0"
+            hetznercloud: False
           - name: almalinux9_2.13
             runs_on: ubuntu-latest
             distro: almalinux9
             playbook: converge.yml
             ansible: "ansible-core>2.13,<2.14"
             ansible_lint: "ansible-lint>6,<7"
+            hetznercloud: False
 
           - name: debian10_2.9
             runs_on: ubuntu-latest
@@ -208,12 +220,14 @@ jobs:
             playbook: converge.yml
             ansible: "ansible==2.9.27"
             ansible_lint: "ansible-lint==5.4.0"
+            hetznercloud: True
           - name: debian10_2.13
             runs_on: ubuntu-latest
             distro: debian10
             playbook: converge.yml
             ansible: "ansible-core>2.13,<2.14"
             ansible_lint: "ansible-lint>6,<7"
+            hetznercloud: True
 
           - name: debian11_2.9
             runs_on: ubuntu-latest
@@ -221,12 +235,14 @@ jobs:
             playbook: converge.yml
             ansible: "ansible==2.9.27"
             ansible_lint: "ansible-lint==5.4.0"
+            hetznercloud: True
           - name: debian11_2.13
             runs_on: ubuntu-latest
             distro: debian11
             playbook: converge.yml
             ansible: "ansible-core>2.13,<2.14"
             ansible_lint: "ansible-lint>6,<7"
+            hetznercloud: True
 
           - name: ubuntu2004_2.9
             runs_on: ubuntu-latest
@@ -234,12 +250,14 @@ jobs:
             playbook: converge.yml
             ansible: "ansible==2.9.27"
             ansible_lint: "ansible-lint==5.4.0"
+            hetznercloud: True
           - name: ubuntu2004_2.13
             runs_on: ubuntu-latest
             distro: ubuntu2004
             playbook: converge.yml
             ansible: "ansible-core>2.13,<2.14"
             ansible_lint: "ansible-lint>6,<7"
+            hetznercloud: True
 
           - name: ubuntu2204_2.9
             runs_on: ubuntu-latest
@@ -247,12 +265,14 @@ jobs:
             playbook: converge.yml
             ansible: "ansible==2.9.27"
             ansible_lint: "ansible-lint==5.4.0"
+            hetznercloud: True
           - name: ubuntu2204_2.13
             runs_on: ubuntu-latest
             distro: ubuntu2204
             playbook: converge.yml
             ansible: "ansible-core>2.13,<2.14"
             ansible_lint: "ansible-lint>6,<7"
+            hetznercloud: True
 
 
     steps:
@@ -282,7 +302,24 @@ jobs:
       - name: Install test dependencies.
         run: |
           sudo rm -f /usr/bin/yq
-          pip3 install "${{ matrix.ansible }}" "${{ matrix.ansible_lint }}" molecule[docker] yamllint jmespath e2j2 yq
+          echo "MOLECULE_DRIVER = $MOLECULE_DRIVER"
+          if [[ $MOLECULE_DRIVER == 'hetznercloud' ]] ; then
+            pip3 install "${{ matrix.ansible }}" "${{ matrix.ansible_lint }}" molecule-hetznercloud yamllint jmespath e2j2 yq
+            ansible-galaxy collection install hetzner.hcloud community.crypto
+            site=$(python -c "from distutils.sysconfig import get_python_lib; print(get_python_lib())")
+            createyml_file=$site/molecule_hetznercloud/playbooks/create.yml
+            createyml_url=https://raw.githubusercontent.com/de-it-krachten/molecule-hetznercloud/sshkey/molecule_hetznercloud/playbooks/create.yml
+            sudo apt install curl
+            curl -s -o $createyml_file $createyml_url
+          elif [[ $MOLECULE_DRIVER == 'vagrant' ]] ; then
+            pip3 install "${{ matrix.ansible }}" "${{ matrix.ansible_lint }}" molecule yamllint jmespath e2j2 yq
+          elif [[ $MOLECULE_DRIVER == 'podman' ]] ; then
+            pip3 install "${{ matrix.ansible }}" "${{ matrix.ansible_lint }}" molecule[podman] yamllint jmespath e2j2 yq
+          else
+            pip3 install "${{ matrix.ansible }}" "${{ matrix.ansible_lint }}" molecule[docker] yamllint jmespath e2j2 yq
+          fi
+        env:
+          MOLECULE_DRIVER: ${{ vars.MOLECULE_DRIVER }}
 
       - name: Retrieve & install wrapper scripts
         run: |
@@ -325,10 +362,11 @@ jobs:
           molecule --version
 
       - name: Run Molecule tests.
-        run: molecule-test.sh
+        run: molecule-test.sh -A
         env:
           PY_COLORS: '1'
           ANSIBLE_FORCE_COLOR: '1'
           MOLECULE_DISTRO: ${{ matrix.distro }}
           MOLECULE_PLAYBOOK: ${{ matrix.playbook }}
           HCLOUD_TOKEN: ${{ secrets.HCLOUD_TOKEN }}
+          MOLECULE_DRIVER: ${{ vars.MOLECULE_DRIVER }}
