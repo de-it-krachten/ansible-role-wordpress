@@ -18,10 +18,10 @@ platforms:
   ubuntu1804:
     ci: false
     supported: false
-  fedora35:
+  fedora36:
     ci: false
     supported: false
-  fedora36:
+  fedora37:
     ci: false
     supported: false
   alpine3:
@@ -29,37 +29,26 @@ platforms:
     supported: false
 
 molecule:
-  driver: docker
+  driver: podman
   requirements:
     roles_extra:
-      - openssl
-      - apache
-      - php
-      - mariadb
+      - deitkrachten.openssl
+      - deitkrachten.apache
+      - deitkrachten.php
+      - deitkrachten.mariadb
   converge:
     roles:
-      - openssl
-      - apache
-      - php
-      - mariadb
+      - deitkrachten.openssl
+      - deitkrachten.apache
+      - deitkrachten.php
+      - deitkrachten.mariadb
     vars:
-      openssl_fqdn: www.example.com
+      openssl_fqdn: server.example.com
       apache_fqdn: server.example.com
       apache_ssl_key: "{{ openssl_server_key }}"
       apache_ssl_crt: "{{ openssl_server_crt }}"
       apache_ssl_chain: "{{ openssl_server_crt }}"
       # apache_index_html: true
-      apache_vhosts:
-        - vhost: www.example.com
-          template: vhost.conf.j2
-          listen: '*'
-          port: '443'
-          ssl: yes
-          ssl_key: "{{ openssl_server_key }}"
-          ssl_crt: "{{ openssl_server_crt }}"
-          ssl_chain: "{{ openssl_server_crt }}"
-          owner: "{{ apache_user }}"
-          group: "{{ apache_group }}"
       mariadb_user: root
       mariadb_pwd: root
       mariadb_db_host: localhost
@@ -67,8 +56,10 @@ molecule:
       mariadb_db_user: wordpress
       mariadb_db_pwd: wordpress
       mariadb_socket_authentication: false
-      wordpress_path: /var/www/www.example.com/public_html
-      wordpress_conf_dir: /var/www/www.example.com/public_html
+      # wordpress_path: /var/www/www.example.com/public_html
+      # wordpress_conf_dir: /var/www/www.example.com/public_html
+      wordpress_path: /var/www/html
+      wordpress_conf_dir: /var/www/html
       wordpress_db_host: localhost
       wordpress_db_name: wordpress
       wordpress_db_user: wordpress
