@@ -94,7 +94,6 @@ wordpress_db_pwd: wordpress
     wordpress_db_user: wordpress
     wordpress_db_pwd: wordpress
   roles:
-    - deitkrachten.showinfo
     - deitkrachten.openssl
     - deitkrachten.apache
     - deitkrachten.php
