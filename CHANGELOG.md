@@ -1,3 +1,10 @@
+# [1.1.0](https://github.com/de-it-krachten/ansible-role-wordpress/compare/v1.0.0...v1.1.0) (2023-05-06)
+
+
+### Features
+
+* Move to namespaced role names ([229fd47](https://github.com/de-it-krachten/ansible-role-wordpress/commit/229fd475132950bd9d2066d999fd919d4b4db427))
+
 # 1.0.0 (2022-10-12)
 
 
