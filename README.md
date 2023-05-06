@@ -15,7 +15,7 @@ None
 #### Collections
 - community.general
 - ansible.posix
-- community.general
+- community.crypto
 
 ## Platforms
 
@@ -26,6 +26,7 @@ Supported platforms
 - RockyLinux 8
 - RockyLinux 9
 - OracleLinux 8
+- OracleLinux 9
 - AlmaLinux 8
 - AlmaLinux 9
 - Debian 10 (Buster)
@@ -72,14 +73,13 @@ wordpress_db_pwd: wordpress
 <pre><code>
 - name: sample playbook for role 'wordpress'
   hosts: all
-  become: "{{ molecule['converge']['become'] | default('yes') }}"
+  become: "yes"
   vars:
-    openssl_fqdn: www.example.com
+    openssl_fqdn: server.example.com
     apache_fqdn: server.example.com
     apache_ssl_key: "{{ openssl_server_key }}"
     apache_ssl_crt: "{{ openssl_server_crt }}"
     apache_ssl_chain: "{{ openssl_server_crt }}"
-    apache_vhosts: "[{'vhost': 'www.example.com', 'template': 'vhost.conf.j2', 'listen': '*', 'port': '443', 'ssl': True, 'ssl_key': '{{ openssl_server_key }}', 'ssl_crt': '{{ openssl_server_crt }}', 'ssl_chain': '{{ openssl_server_crt }}', 'owner': '{{ apache_user }}', 'group': '{{ apache_group }}'}]"
     mariadb_user: root
     mariadb_pwd: root
     mariadb_db_host: localhost
@@ -87,23 +87,17 @@ wordpress_db_pwd: wordpress
     mariadb_db_user: wordpress
     mariadb_db_pwd: wordpress
     mariadb_socket_authentication: False
-    wordpress_path: /var/www/www.example.com/public_html
-    wordpress_conf_dir: /var/www/www.example.com/public_html
+    wordpress_path: /var/www/html
+    wordpress_conf_dir: /var/www/html
     wordpress_db_host: localhost
     wordpress_db_name: wordpress
     wordpress_db_user: wordpress
     wordpress_db_pwd: wordpress
-  pre_tasks:
-    - name: Create 'remote_tmp'
-      ansible.builtin.file:
-        path: /root/.ansible/tmp
-        state: directory
-        mode: "0700"
   roles:
-    - openssl
-    - apache
-    - php
-    - mariadb
+    - deitkrachten.openssl
+    - deitkrachten.apache
+    - deitkrachten.php
+    - deitkrachten.mariadb
   tasks:
     - name: Include role 'wordpress'
       ansible.builtin.include_role:
