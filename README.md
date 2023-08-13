@@ -29,10 +29,14 @@ Supported platforms
 - OracleLinux 9
 - AlmaLinux 8
 - AlmaLinux 9
-- Debian 10 (Buster)
+- SUSE Linux Enterprise 15<sup>1</sup>
+- openSUSE Leap 15
+- Debian 10 (Buster)<sup>1</sup>
 - Debian 11 (Bullseye)
+- Debian 12 (Bookworm)
 - Ubuntu 20.04 LTS
 - Ubuntu 22.04 LTS
+- Fedora 37
 
 Note:
 <sup>1</sup> : no automated testing is performed on these platforms
