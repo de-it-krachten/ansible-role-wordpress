@@ -13,9 +13,6 @@ galaxy_info:
       versions:
         - '8'
         - '9'
-    - name: opensuse
-      versions:
-        - all
     - name: Debian
       versions:
         - buster
@@ -25,7 +22,4 @@ galaxy_info:
       versions:
         - focal
         - jammy
-    - name: Fedora
-      versions:
-        - all
 dependencies: []

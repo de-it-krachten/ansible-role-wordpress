@@ -29,14 +29,11 @@ Supported platforms
 - OracleLinux 9
 - AlmaLinux 8
 - AlmaLinux 9
-- SUSE Linux Enterprise 15<sup>1</sup>
-- openSUSE Leap 15
 - Debian 10 (Buster)<sup>1</sup>
 - Debian 11 (Bullseye)
 - Debian 12 (Bookworm)
 - Ubuntu 20.04 LTS
 - Ubuntu 22.04 LTS
-- Fedora 37
 
 Note:
 <sup>1</sup> : no automated testing is performed on these platforms
@@ -84,6 +81,7 @@ wordpress_db_pwd: wordpress
     apache_ssl_key: "{{ openssl_server_key }}"
     apache_ssl_crt: "{{ openssl_server_crt }}"
     apache_ssl_chain: "{{ openssl_server_crt }}"
+    mariadb_release: 10.11
     mariadb_user: root
     mariadb_pwd: root
     mariadb_db_host: localhost
