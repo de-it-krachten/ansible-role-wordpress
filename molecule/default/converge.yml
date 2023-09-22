@@ -9,6 +9,7 @@
     apache_ssl_key: "{{ openssl_server_key }}"
     apache_ssl_crt: "{{ openssl_server_crt }}"
     apache_ssl_chain: "{{ openssl_server_crt }}"
+    mariadb_release: 10.11
     mariadb_user: root
     mariadb_pwd: root
     mariadb_db_host: localhost

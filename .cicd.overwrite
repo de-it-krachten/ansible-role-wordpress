@@ -15,13 +15,19 @@ platforms:
   centos7:
     ci: false
     supported: false
+  opensuse15:
+    ci: false
+    supported: false
+  sles15:
+    ci: false
+    supported: false
   ubuntu1804:
     ci: false
     supported: false
-  fedora36:
+  fedora37:
     ci: false
     supported: false
-  fedora37:
+  fedora38:
     ci: false
     supported: false
   alpine3:
@@ -49,6 +55,7 @@ molecule:
       apache_ssl_crt: "{{ openssl_server_crt }}"
       apache_ssl_chain: "{{ openssl_server_crt }}"
       # apache_index_html: true
+      mariadb_release: 10.11
       mariadb_user: root
       mariadb_pwd: root
       mariadb_db_host: localhost
