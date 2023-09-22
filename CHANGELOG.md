@@ -1,3 +1,15 @@
+# [1.2.0](https://github.com/de-it-krachten/ansible-role-wordpress/compare/v1.1.0...v1.2.0) (2023-09-22)
+
+
+### Bug Fixes
+
+* Fix loop label to string ([e3faff4](https://github.com/de-it-krachten/ansible-role-wordpress/commit/e3faff427420e09ba075f08d17ce4f0cbb616c52))
+
+
+### Features
+
+* Update supported platforms & CI ([e01f8fc](https://github.com/de-it-krachten/ansible-role-wordpress/commit/e01f8fc361bf559cbf9f403baf8308c7a0af8521))
+
 # [1.1.0](https://github.com/de-it-krachten/ansible-role-wordpress/compare/v1.0.0...v1.1.0) (2023-05-06)
 
 
