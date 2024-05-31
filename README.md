@@ -13,9 +13,8 @@
 None
 
 #### Collections
-- community.general
 - ansible.posix
-- community.crypto
+- community.general
 
 ## Platforms
 
@@ -29,11 +28,11 @@ Supported platforms
 - OracleLinux 9
 - AlmaLinux 8
 - AlmaLinux 9
-- Debian 10 (Buster)<sup>1</sup>
 - Debian 11 (Bullseye)
 - Debian 12 (Bookworm)
 - Ubuntu 20.04 LTS
 - Ubuntu 22.04 LTS
+- Ubuntu 24.04 LTS
 
 Note:
 <sup>1</sup> : no automated testing is performed on these platforms
@@ -74,13 +73,13 @@ wordpress_db_pwd: wordpress
 <pre><code>
 - name: sample playbook for role 'wordpress'
   hosts: all
-  become: "yes"
+  become: 'yes'
   vars:
     openssl_fqdn: server.example.com
     apache_fqdn: server.example.com
-    apache_ssl_key: "{{ openssl_server_key }}"
-    apache_ssl_crt: "{{ openssl_server_crt }}"
-    apache_ssl_chain: "{{ openssl_server_crt }}"
+    apache_ssl_key: '{{ openssl_server_key }}'
+    apache_ssl_crt: '{{ openssl_server_crt }}'
+    apache_ssl_chain: '{{ openssl_server_crt }}'
     mariadb_release: 10.11
     mariadb_user: root
     mariadb_pwd: root
@@ -88,7 +87,7 @@ wordpress_db_pwd: wordpress
     mariadb_db_name: wordpress
     mariadb_db_user: wordpress
     mariadb_db_pwd: wordpress
-    mariadb_socket_authentication: False
+    mariadb_socket_authentication: false
     wordpress_path: /var/www/html
     wordpress_conf_dir: /var/www/html
     wordpress_db_host: localhost
