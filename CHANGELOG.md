@@ -1,3 +1,10 @@
+# [1.3.0](https://github.com/de-it-krachten/ansible-role-wordpress/compare/v1.2.0...v1.3.0) (2024-06-03)
+
+
+### Features
+
+* Add support for Ubuntu 24.04 LTS + Fedora 40 ([d6ddbc7](https://github.com/de-it-krachten/ansible-role-wordpress/commit/d6ddbc70da45dfbb775df4c29eb36f5d6567fd48))
+
 # [1.2.0](https://github.com/de-it-krachten/ansible-role-wordpress/compare/v1.1.0...v1.2.0) (2023-09-22)
 
 
