@@ -1,3 +1,10 @@
+# [1.4.0](https://github.com/de-it-krachten/ansible-role-wordpress/compare/v1.3.0...v1.4.0) (2024-12-29)
+
+
+### Features
+
+* Update supported platforms & CI ([85acccb](https://github.com/de-it-krachten/ansible-role-wordpress/commit/85acccbfae78eb85acfea77ebf010ffc0bde864d))
+
 # [1.3.0](https://github.com/de-it-krachten/ansible-role-wordpress/compare/v1.2.0...v1.3.0) (2024-06-03)
 
 
