@@ -19,6 +19,5 @@ galaxy_info:
         - bookworm
     - name: Ubuntu
       versions:
-        - focal
         - jammy
 dependencies: []
