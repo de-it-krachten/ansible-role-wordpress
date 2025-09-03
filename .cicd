@@ -639,8 +639,8 @@ platforms:
         server_type: cx22
   ubuntu2004:
     name: Ubuntu 20.04 LTS
-    ci: true
-    supported: true
+    ci: false
+    supported: false
     galaxy:
       name: Ubuntu
       version: focal
@@ -1045,7 +1045,7 @@ github:
 gitlab:
   active: false
 
-# Axure DevOps
+# Azure DevOps
 ado:
   active: false
 

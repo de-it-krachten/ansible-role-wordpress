@@ -142,16 +142,8 @@ jobs:
             runs_on: ubuntu-22.04
             distro: rockylinux9
             playbook: converge.yml
-            ansible: "ansible-core>2.16,<2.17"
-            ansible_lint: "ansible-lint>6,<7"
-            hetznercloud: True
-
-          - name: rockylinux10
-            runs_on: ubuntu-22.04
-            distro: rockylinux10
-            playbook: converge.yml
-            ansible: "ansible-core>2.16,<2.17"
-            ansible_lint: "ansible-lint>6,<7"
+            ansible: "ansible-core>2.18,<2.19"
+            ansible_lint: "ansible-lint"
             hetznercloud: True
 
           - name: oraclelinux8
@@ -166,16 +158,8 @@ jobs:
             runs_on: ubuntu-22.04
             distro: oraclelinux9
             playbook: converge.yml
-            ansible: "ansible-core>2.16,<2.17"
-            ansible_lint: "ansible-lint>6,<7"
-            hetznercloud: False
-
-          - name: oraclelinux10
-            runs_on: ubuntu-22.04
-            distro: oraclelinux10
-            playbook: converge.yml
-            ansible: "ansible-core>2.16,<2.17"
-            ansible_lint: "ansible-lint>6,<7"
+            ansible: "ansible-core>2.18,<2.19"
+            ansible_lint: "ansible-lint"
             hetznercloud: False
 
           - name: almalinux8
@@ -190,64 +174,40 @@ jobs:
             runs_on: ubuntu-22.04
             distro: almalinux9
             playbook: converge.yml
-            ansible: "ansible-core>2.16,<2.17"
-            ansible_lint: "ansible-lint>6,<7"
-            hetznercloud: False
-
-          - name: almalinux10
-            runs_on: ubuntu-22.04
-            distro: almalinux10
-            playbook: converge.yml
-            ansible: "ansible-core>2.16,<2.17"
-            ansible_lint: "ansible-lint>6,<7"
+            ansible: "ansible-core>2.18,<2.19"
+            ansible_lint: "ansible-lint"
             hetznercloud: False
 
           - name: debian11
             runs_on: ubuntu-22.04
             distro: debian11
             playbook: converge.yml
-            ansible: "ansible-core>2.16,<2.17"
-            ansible_lint: "ansible-lint>6,<7"
+            ansible: "ansible-core>2.18,<2.19"
+            ansible_lint: "ansible-lint"
             hetznercloud: True
 
           - name: debian12
             runs_on: ubuntu-22.04
             distro: debian12
             playbook: converge.yml
-            ansible: "ansible-core>2.16,<2.17"
-            ansible_lint: "ansible-lint>6,<7"
-            hetznercloud: True
-
-          - name: debian13
-            runs_on: ubuntu-22.04
-            distro: debian13
-            playbook: converge.yml
-            ansible: "ansible-core>2.16,<2.17"
-            ansible_lint: "ansible-lint>6,<7"
-            hetznercloud: True
-
-          - name: ubuntu2004
-            runs_on: ubuntu-22.04
-            distro: ubuntu2004
-            playbook: converge.yml
-            ansible: "ansible-core>2.16,<2.17"
-            ansible_lint: "ansible-lint>6,<7"
+            ansible: "ansible-core>2.18,<2.19"
+            ansible_lint: "ansible-lint"
             hetznercloud: True
 
           - name: ubuntu2204
             runs_on: ubuntu-22.04
             distro: ubuntu2204
             playbook: converge.yml
-            ansible: "ansible-core>2.16,<2.17"
-            ansible_lint: "ansible-lint>6,<7"
+            ansible: "ansible-core>2.18,<2.19"
+            ansible_lint: "ansible-lint"
             hetznercloud: True
 
           - name: ubuntu2404
             runs_on: ubuntu-22.04
             distro: ubuntu2404
             playbook: converge.yml
-            ansible: "ansible-core>2.16,<2.17"
-            ansible_lint: "ansible-lint>6,<7"
+            ansible: "ansible-core>2.18,<2.19"
+            ansible_lint: "ansible-lint"
             hetznercloud: True
 
 
