@@ -36,6 +36,7 @@ Supported platforms
 Note:
 <sup>1</sup> : no automated testing is performed on these platforms
 
+
 ## Role Variables
 ### defaults/main.yml
 <pre><code>
@@ -74,6 +75,7 @@ wordpress_db_pwd: wordpress
   hosts: all
   become: 'yes'
   vars:
+    molecule_driver: '{{ lookup(''env'', ''MOLECULE_DRIVER_NAME'') }}'
     openssl_fqdn: server.example.com
     apache_fqdn: server.example.com
     apache_ssl_key: '{{ openssl_server_key }}'

@@ -60,9 +60,9 @@
   ci: false
   box: generic/opensuse15
   interfaces: [{'network_name': 'private_network', 'type': 'dhcp', 'auto_config': True}]
-- name: opensusetumbleweed15
+- name: opensuse16
   ci: false
-  box: generic/opensuse15
+  box: generic/opensuse16
   interfaces: [{'network_name': 'private_network', 'type': 'dhcp', 'auto_config': True}]
 - name: debian10
   ci: false
@@ -118,7 +118,11 @@
   interfaces: [{'network_name': 'private_network', 'type': 'dhcp'}]
 - name: fedora42
   ci: false
-  box: generic/fedora41
+  box: generic/fedora42
+  interfaces: [{'network_name': 'private_network', 'type': 'dhcp'}]
+- name: fedora43
+  ci: false
+  box: generic/fedora43
   interfaces: [{'network_name': 'private_network', 'type': 'dhcp'}]
 - name: alpine3
   ci: false
