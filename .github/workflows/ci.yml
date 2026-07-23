@@ -172,8 +172,9 @@ jobs:
           set -e
           [[ $(id -un) != root ]] && sudo=sudo
           ansible="${{ matrix.venv }}"
+          python=$(which python3)
           export VENV_LIST="yq e2j2 jinjanator $ansible"
-          /opt/cicd-tools/python/python-setup-venvs.sh --sudo /usr/local/venv
+          /opt/cicd-tools/python/python-setup-venvs.sh --python=$python --sudo /usr/local/venv
 
       - name: Install required galaxy collections
         run: |
@@ -333,8 +334,9 @@ jobs:
           set -e
           [[ $(id -un) != root ]] && sudo=sudo
           ansible="${{ matrix.venv }}"
+          python=$(which python3)
           export VENV_LIST="yq e2j2 jinjanator $ansible"
-          /opt/cicd-tools/python/python-setup-venvs.sh --sudo /usr/local/venv
+          /opt/cicd-tools/python/python-setup-venvs.sh --python=$python --sudo /usr/local/venv
 
       - name: Install required galaxy collections
         run: |
@@ -587,8 +589,9 @@ jobs:
           set -e
           [[ $(id -un) != root ]] && sudo=sudo
           ansible="${{ matrix.venv }}"
+          python=$(which python3)
           export VENV_LIST="yq e2j2 jinjanator $ansible"
-          /opt/cicd-tools/python/python-setup-venvs.sh --sudo /usr/local/venv
+          /opt/cicd-tools/python/python-setup-venvs.sh --python=$python --sudo /usr/local/venv
 
       - name: Install required galaxy collections
         run: |
