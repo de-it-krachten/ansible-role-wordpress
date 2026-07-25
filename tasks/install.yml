@@ -65,8 +65,8 @@
     state: present
   notify: Restarting web service
   when:
-    - ansible_selinux is defined
-    - ansible_selinux['status'] == 'enabled'
+    - ansible_facts.selinux is defined
+    - ansible_facts.selinux['status'] == 'enabled'
 
 - name: Reset configuration path
   ansible.builtin.set_fact:
