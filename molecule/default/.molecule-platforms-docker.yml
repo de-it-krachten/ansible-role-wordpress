@@ -1,5 +1,4 @@
 ---
-
 - name: rhel7
   ci: false
   image: registry.access.redhat.com/ubi7/ubi-init:latest
@@ -120,6 +119,16 @@
   cgroupns_mode: host
   volumes:
     - /sys/fs/cgroup:/sys/fs/cgroup:rw
+- name: olam8
+  ci: false
+  image: docker.io/dropveter/olam:latest
+  privileged: true
+  pre_build_image: true
+  cgroupns_mode: host
+  volumes:
+    - /sys/fs/cgroup:/sys/fs/cgroup:rw
+  ports:
+    - 443:443
 - name: almalinux8
   ci: true
   image: docker.io/dropveter/almalinux8-ansible
@@ -146,15 +155,15 @@
     - /sys/fs/cgroup:/sys/fs/cgroup:rw
 - name: opensuse15
   ci: false
-  image: docker.io/geerlingguy/docker-opensuseleap15-ansible:latest
+  image: docker.io/dropveter/opensuse15-ansible:latest
   privileged: true
   pre_build_image: true
   cgroupns_mode: host
   volumes:
     - /sys/fs/cgroup:/sys/fs/cgroup:rw
-- name: opensusetumbleweed15
+- name: opensuse16
   ci: false
-  image: robertdebock/opensuse
+  image: docker.io/dropveter/opensuse16-ansible:latest
   privileged: true
   pre_build_image: true
   cgroupns_mode: host
@@ -169,7 +178,7 @@
   volumes:
     - /sys/fs/cgroup:/sys/fs/cgroup:rw
 - name: debian11
-  ci: true
+  ci: false
   image: docker.io/geerlingguy/docker-debian11-ansible:latest
   privileged: true
   pre_build_image: true
@@ -224,6 +233,14 @@
   cgroupns_mode: host
   volumes:
     - /sys/fs/cgroup:/sys/fs/cgroup:rw
+- name: ubuntu2604
+  ci: true
+  image: docker.io/geerlingguy/docker-ubuntu2604-ansible:latest
+  privileged: true
+  pre_build_image: true
+  cgroupns_mode: host
+  volumes:
+    - /sys/fs/cgroup:/sys/fs/cgroup:rw
 - name: fedora37
   ci: false
   image: docker.io/geerlingguy/docker-fedora37-ansible:latest
@@ -272,6 +289,22 @@
   cgroupns_mode: host
   volumes:
     - /sys/fs/cgroup:/sys/fs/cgroup:rw
+- name: fedora43
+  ci: false
+  image: docker.io/geerlingguy/docker-fedora43-ansible:latest
+  privileged: true
+  pre_build_image: true
+  cgroupns_mode: host
+  volumes:
+    - /sys/fs/cgroup:/sys/fs/cgroup:rw
+- name: fedora44
+  ci: false
+  image: docker.io/geerlingguy/docker-fedora44-ansible:latest
+  privileged: true
+  pre_build_image: true
+  cgroupns_mode: host
+  volumes:
+    - /sys/fs/cgroup:/sys/fs/cgroup:rw
 - name: alpine3
   ci: false
   image: docker.io/dropveter/alpine-python3
@@ -284,7 +317,7 @@
   ci: false
   image: docker.io/dropveter/docker-dind-ansible:latest
   privileged: true
-  pre_build_image: false
+  pre_build_image: true
   cgroupns_mode: host
   environment:
     DOCKER_TLS_CERTDIR: /certs
